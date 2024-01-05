@@ -533,3 +533,27 @@ export const addToLog = async (userId: string, videoId: string) => {
         return error;
     }
 };
+
+export const giveVideoView = async (videoId: string) => {
+    try {
+        const video = await databases.getDocument(
+            import.meta.env.VITE_HC_HUB_DB_ID || '',
+            import.meta.env.VITE_VIDEOS_TABLE_ID || '',
+            videoId
+        );
+
+        const videoRequest = video as unknown as Video;
+
+        const updatedVideo = await databases.updateDocument(
+            import.meta.env.VITE_HC_HUB_DB_ID || '',
+            import.meta.env.VITE_VIDEOS_TABLE_ID || '',
+            videoRequest.$id,
+            {
+                views: videoRequest.views + 1,
+            }
+        );
+        return updatedVideo;
+    } catch (error) {
+        return error;
+    }
+};
