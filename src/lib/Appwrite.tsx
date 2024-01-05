@@ -314,7 +314,7 @@ export const subscribeToChannel = async (userId: string, channelId: string) => {
                 Query.equal('userId', userId),
             ]
         );
-        const subscribedToRequest = subscribedTo as SubscribedToRequest;
+        const subscribedToRequest = subscribedTo as unknown as SubscribedToRequest;
 
         const channel = await databases.getDocument(
             import.meta.env.VITE_HC_HUB_DB_ID || '',
@@ -322,7 +322,7 @@ export const subscribeToChannel = async (userId: string, channelId: string) => {
             channelId
         );
 
-        const channelRequest = channel as Channel;
+        const channelRequest = channel as unknown as Channel;
 
         subscribedToRequest.documents[0].Channels.push(channelRequest);
 
@@ -349,7 +349,7 @@ export const unsubscribeFromChannel = async (userId: string, channelId: string) 
                 Query.equal('userId', userId),
             ]
         );
-        const subscribedToRequest = subscribedTo as SubscribedToRequest;
+        const subscribedToRequest = subscribedTo as unknown as SubscribedToRequest;
 
         const channel = await databases.getDocument(
             import.meta.env.VITE_HC_HUB_DB_ID || '',
@@ -357,7 +357,7 @@ export const unsubscribeFromChannel = async (userId: string, channelId: string) 
             channelId
         );
 
-        const channelRequest = channel as Channel;
+        const channelRequest = channel as unknown as Channel;
 
         subscribedToRequest.documents[0].Channels = subscribedToRequest.documents[0].Channels.filter((channel: any) => channel.$id !== channelRequest.$id);
         const updatedSubscribedTo = await databases.updateDocument(
@@ -411,7 +411,7 @@ export const likeVideo = async (userId: string, videoId: string) => {
                 Query.equal('userId', userId),
             ]
         );
-        const likedToRequest = likedTo as LikedToRequest;
+        const likedToRequest = likedTo as unknown as LikedToRequest;
 
         const video = await databases.getDocument(
             import.meta.env.VITE_HC_HUB_DB_ID || '',
@@ -419,7 +419,7 @@ export const likeVideo = async (userId: string, videoId: string) => {
             videoId
         );
 
-        const videoRequest = video as Channel;
+        const videoRequest = video as unknown as Video;
 
         likedToRequest.documents[0].Videos.push(videoRequest);
 
@@ -446,7 +446,7 @@ export const unlikeVideo = async (userId: string, videoId: string) => {
                 Query.equal('userId', userId),
             ]
         );
-        const likedToRequest = likedTo as LikedToRequest;
+        const likedToRequest = likedTo as unknown as LikedToRequest;
 
         const video = await databases.getDocument(
             import.meta.env.VITE_HC_HUB_DB_ID || '',
@@ -454,7 +454,7 @@ export const unlikeVideo = async (userId: string, videoId: string) => {
             videoId
         );
 
-        const videoRequest = video as Channel;
+        const videoRequest = video as unknown as Channel;
 
         likedToRequest.documents[0].Videos = likedToRequest.documents[0].Videos.filter((video: any) => video.$id !== videoRequest.$id);
         const updatedLikedTo = await databases.updateDocument(
@@ -508,7 +508,7 @@ export const addToLog = async (userId: string, videoId: string) => {
                 Query.equal('userId', userId),
             ]
         );
-        const logRequest = log as LogRequest;
+        const logRequest = log as unknown as LogRequest;
 
         const video = await databases.getDocument(
             import.meta.env.VITE_HC_HUB_DB_ID || '',
@@ -516,7 +516,7 @@ export const addToLog = async (userId: string, videoId: string) => {
             videoId
         );
 
-        const videoRequest = video as Video;
+        const videoRequest = video as unknown as Video;
 
         logRequest.documents[0].Videos.push(videoRequest);
 
@@ -529,30 +529,6 @@ export const addToLog = async (userId: string, videoId: string) => {
             }
         );
         return updatedLog;
-    } catch (error) {
-        return error;
-    }
-};
-
-export const giveVideoView = async (videoId: string) => {
-    try {
-        const video = await databases.getDocument(
-            import.meta.env.VITE_HC_HUB_DB_ID || '',
-            import.meta.env.VITE_VIDEOS_TABLE_ID || '',
-            videoId
-        );
-
-        const videoRequest = video as Channel;
-
-        const updatedVideo = await databases.updateDocument(
-            import.meta.env.VITE_HC_HUB_DB_ID || '',
-            import.meta.env.VITE_VIDEOS_TABLE_ID || '',
-            videoRequest.$id,
-            {
-                views: videoRequest.views + 1,
-            }
-        );
-        return updatedVideo;
     } catch (error) {
         return error;
     }
