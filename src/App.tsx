@@ -140,7 +140,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
         <ScrollArea className="w-full h-full pl-4 pr-4">
-          {user && subscribedTo && likedTo && log && <DefaultLayout user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel}>
+          { user && user !== "error" && subscribedTo && likedTo && log && <DefaultLayout user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel}>
             <Routes>
               <Route path="/" element={user && (user === "error" ? <Navigate to="/login" /> : <Home />)} />
               <Route path="/subscribed" element={user && (user === "error" ? <Navigate to="/login" /> : <Subscribed subscribedTo={subscribedTo} />)} />
