@@ -24,7 +24,7 @@ const Home = () => {
 
     return (
         <>
-            <div className="flex flex-row h-8 gap-2 p-1">
+            <div className="flex flex-row self-start h-8 gap-2 p-1">
                 <a href="/" className={activeCat === "" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>All</a>
                 <a href="?cat=movie" className={activeCat === "movie" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>Movies</a>
                 <a href="?cat=tv-show" className={activeCat === "tv-show" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>TV Shows</a>

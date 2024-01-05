@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createChannel, uploadPFP } from "@/lib/Appwrite";
+import { updateChannel, updatePFP, getPFP, getChannelById } from "@/lib/Appwrite";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,30 +7,47 @@ import { FileUploader } from "react-drag-drop-files";
 import { Channel } from "@/assets/types";
 import { Loader2 } from 'lucide-react';
 
-const CreateChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const EditChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     const [username, setUsername] = useState<string>("");
-    const [pfp, setPfp] = useState<string>("");
+    const [prevFile, setPrevFile] = useState<ImageData>();
     const [file, setFile] = useState<File>();
+    const [src, setSrc] = useState<any>();
     const [loader, setLoader] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
+    useEffect(() => {
+        const fetchChannel = async () => {
+            const currentChannel: Channel = await getChannelById(channel.$id) as Channel;
+            setUsername(currentChannel.username);
+
+            if (currentChannel) {
+                const pfpData: ImageData = await getPFP(currentChannel.pfp) as ImageData;
+                setPrevFile(pfpData);
+                setSrc(pfpData);
+            }
+        };
+
+        fetchChannel();
+    }, [channel]);
+
     const handlePFP = (file: File) => {
         setFile(file);
+        setSrc(URL.createObjectURL(file));
     };
 
     const handleRemoveFile = () => {
         setFile(undefined);
+        setSrc(undefined);
     };
 
     const handleCreateChannel = async () => {
         if (username.length < 64 && username.length > 4) {
             if (file) {
                 setLoader(true);
-                const pfp = await uploadPFP(file);
-                console.log(pfp);
-                const channel: Channel = await createChannel(user.account.$id, username, pfp.$id) as Channel;
-                if (channel.$id) {
-                    window.location.href = "/channel/" + channel.$id;
+                const pfp = await updatePFP(channel.$id, channel.pfp, file);
+                const updatedChannel: Channel = await updateChannel(channel.$id, username, pfp.$id) as Channel;
+                if (updatedChannel.$id) {
+                    window.location.href = "/channel/" + updatedChannel.$id;
                 } else {
                     setLoader(false);
                     setError("Error creating channel");
@@ -47,7 +64,7 @@ const CreateChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
         <>
             {!loader ? <div className="flex flex-col items-center justify-center w-2/3 gap-4 mt-12 h-fit">
                 <div className="flex flex-col items-center justify-center w-3/5 aspect-square">
-                    {file ? <img src={URL.createObjectURL(file)} className={`w-full h-full rounded-full aspect-square`} onClick={handleRemoveFile} />
+                    {src ? <img src={src} className={`w-full h-full rounded-full aspect-square`} onClick={handleRemoveFile} />
                     :
                     <FileUploader handleChange={handlePFP} name="file" types={["JPG", "JPEG", "PNG"]} />}
                 </div>
@@ -63,7 +80,7 @@ const CreateChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
                         minLength={4}
                         className="w-2/3"
                     />
-                    <Button onClick={handleCreateChannel}>Create Channel</Button>
+                    <Button onClick={handleCreateChannel}>Update Channel</Button>
                     <p className="text-red-700">{error}</p>
                 </div>
             </div>
@@ -75,4 +92,4 @@ const CreateChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     );
 };
 
-export default CreateChannel;
+export default EditChannel;

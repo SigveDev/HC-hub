@@ -10,7 +10,7 @@ import { logout } from "@/lib/Appwrite";
 import { Button } from "./ui/button";
 import { Search, Menu } from "lucide-react";
 
-const Header = ({ user }: any) => {
+const Header = ({ user, channel }: any) => {
     const [avatar, setAvatar] = useState<string>();
     const [credentials, setCredentials] = useState<string>();
     const [settingLink, setSettingLink] = useState<string>();
@@ -108,7 +108,8 @@ const Header = ({ user }: any) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                     <DropdownMenuLabel>{user.account.name}</DropdownMenuLabel>
-                    <DropdownMenuItem className="cursor-pointer"><a href="/user/12345678">Channel</a></DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer"><a href={"/channel/" + (channel !== undefined && channel.$id)}>Channel</a></DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer"><a href="https://studio.hub.hcklikk.com">Studio</a></DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer"><a href={settingLink}>Settings</a></DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuLabel>Theme</DropdownMenuLabel>

@@ -15,8 +15,9 @@ const SideMenu = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     useEffect(() => {
         const url = window.location.pathname;
         const path = url.split('/')[1];
-        setPage(path + "/" + (channel !== undefined ? channel.$id : ""));
-    }, []);
+        const urlChannel = url.split('/')[2];
+        setPage(path + "/" + (urlChannel !== undefined ? urlChannel : ""));
+    }, [channel]);
 
     useEffect(() => {
       if (window.location.pathname.split('/').includes("watch")) {
@@ -55,7 +56,7 @@ const SideMenu = ({ user, subscribedTo, likedTo, log, channel }: any) => {
                 <Separator />
                 <div className="flex flex-col items-center w-full gap-2 h-fit">
                     <p className={`self-start pl-2 text-lg font-semibold ${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>You</p>
-                    {channel !== undefined ? <a href={"/channel/" + channel?.$id} className={`flex flex-row items-center justify-start h-10 gap-2 p-2 rounded-lg ${minimizeMenu ? "lg:w-fit" : "lg:w-full"} ${page === "channel" && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"}`}><SquareUserRound /><span className={`${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>Your Channel</span></a> : <a href="/channel/create" className={`flex flex-row items-center justify-start h-10 gap-2 p-2 rounded-lg ${minimizeMenu ? "lg:w-fit" : "lg:w-full"} ${page === "channel" && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"}`}><SquareUserRound /><span className={`${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>Create Channel</span></a>}
+                    {channel !== undefined ? <a href={"/channel/" + channel?.$id} className={`flex flex-row items-center justify-start h-10 gap-2 p-2 rounded-lg ${minimizeMenu ? "lg:w-fit" : "lg:w-full"} ${page === ("channel/" + channel.$id) && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"}`}><SquareUserRound /><span className={`${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>Your Channel</span></a> : <a href="/channel/create" className={`flex flex-row items-center justify-start h-10 gap-2 p-2 rounded-lg ${minimizeMenu ? "lg:w-fit" : "lg:w-full"} ${page === "channel" && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"}`}><SquareUserRound /><span className={`${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>Create Channel</span></a>}
                     <a href="/history" className={`flex flex-row items-center justify-start h-10 gap-2 p-2 rounded-lg ${minimizeMenu ? "lg:w-fit" : "lg:w-full"} ${page === "history" && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"}`}><History /><span className={`${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>History</span></a>
                 </div>
                 <Separator />

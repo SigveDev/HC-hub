@@ -20,6 +20,7 @@ import Liked from './components/pages/liked';
 import History from './components/pages/history';
 import ChannelView from './components/pages/channel';
 import CreateChannel from './components/pages/create-channel';
+import EditChannel from './components/pages/edit-channel';
 
 import { SubscribedTo, SubscribedToRequest, LikedTo, LikedToRequest, Log, LogRequest, ChannelRequest } from './assets/types';
 
@@ -146,7 +147,8 @@ function App() {
 
               <Route path="/channel/:channelId" element={user && (user === "error" ? <Navigate to="/login" /> : <ChannelView user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
               <Route path="/channel/create" element={user && (user === "error" ? <Navigate to="/login" /> : <CreateChannel user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
-
+              <Route path="/channel/edit" element={user && (user === "error" ? <Navigate to="/login" /> : <EditChannel user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
+              
               <Route path="/search?" element={user && (user === "error" ? <Navigate to="/login" /> : <Search />)} />
               <Route path="/watch?" element={user && (user === "error" ? <Navigate to="/login" /> : <Watch user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
             </Routes>

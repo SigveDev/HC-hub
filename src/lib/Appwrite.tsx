@@ -178,6 +178,25 @@ export const uploadPFP = async (file: File) => {
     }
 };
 
+export const updatePFP = async (channelId: string, prevId: string, file: File) => {
+    try {
+        const prevPfp = await storage.deleteFile(import.meta.env.VITE_PFP_BUCKET_ID || '', prevId);
+        const pfp = await storage.createFile(import.meta.env.VITE_PFP_BUCKET_ID || '', ID.unique(), file);
+
+        const channel = await databases.updateDocument(
+            import.meta.env.VITE_HC_HUB_DB_ID || '',
+            import.meta.env.VITE_CHANNELS_TABLE_ID || '',
+            channelId,
+            {
+                pfp: pfp.$id,
+            }
+        );
+        return pfp;
+    } catch (error) {
+        return error;
+    }
+};
+
 export const createChannel = async (user: string, username: string, pfp: string) => {
     try {
         const channel = await databases.createDocument(
@@ -189,8 +208,38 @@ export const createChannel = async (user: string, username: string, pfp: string)
                 username: username,
                 pfp: pfp,
                 Subscribers: [],
-                videos: [],
+                Videos: [],
             }
+        );
+        return channel;
+    } catch (error) {
+        return error;
+    }
+};
+
+export const updateChannel = async (id: string, username: string, pfp: string) => {
+    try {
+        const channel = await databases.updateDocument(
+            import.meta.env.VITE_HC_HUB_DB_ID || '',
+            import.meta.env.VITE_CHANNELS_TABLE_ID || '',
+            id,
+            {
+                username: username,
+                pfp: pfp,
+            }
+        );
+        return channel;
+    } catch (error) {
+        return error;
+    }
+};
+
+export const getChannelById = async (id: string) => {
+    try {
+        const channel = await databases.getDocument(
+            import.meta.env.VITE_HC_HUB_DB_ID || '',
+            import.meta.env.VITE_CHANNELS_TABLE_ID || '',
+            id
         );
         return channel;
     } catch (error) {
