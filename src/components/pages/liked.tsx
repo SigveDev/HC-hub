@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import VideoView2 from "../video-view2";
 import { Video } from "@/assets/types";
 
-const Liked = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const Liked = ({ likedTo }: any) => {
     const lodingAmount = [1, 2, 3];
 
     return (

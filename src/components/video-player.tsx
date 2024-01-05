@@ -11,7 +11,6 @@ const VideoPlayer = ({ video }: any) => {
     const [wasPaused, setWasPaused] = useState<boolean>(true);
     const wasPausedRef = useRef(wasPaused);
     const [volume, setVolume] = useState<number>(100);
-    const [muted, setMuted] = useState<boolean>(false);
     const [duration, setDuration] = useState<string>("0:00");
     const [currentTime, setCurrentTime] = useState<string>("0:00");
 
@@ -86,10 +85,6 @@ const VideoPlayer = ({ video }: any) => {
                 setPlaying(false);
             });
 
-            videoElement.addEventListener("volumechange", () => {
-                handleVolumeChange();
-            });
-
             videoElement.addEventListener("loadeddata", () => {
                 setDuration(formatDuration(videoElement.duration));
             });
@@ -113,10 +108,6 @@ const VideoPlayer = ({ video }: any) => {
                 });
                 videoElement.removeEventListener("leavepictureinpicture", () => {
                     setPlaying(false);
-                });
-
-                videoElement.removeEventListener("volumechange", () => {
-                    handleVolumeChange();
                 });
 
                 videoElement.removeEventListener("loadeddata", () => {
@@ -317,16 +308,6 @@ const VideoPlayer = ({ video }: any) => {
                 videoElement.volume = volume / 100;
             } else {
                 videoElement.volume = 0;
-            }
-        }
-    };
-
-    const handleVolumeChange = () => {
-        if (videoElement) {
-            if (videoElement.volume === 0) {
-                setMuted(true);
-            } else {
-                setMuted(false);
             }
         }
     };

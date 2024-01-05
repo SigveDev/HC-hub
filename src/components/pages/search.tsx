@@ -10,7 +10,7 @@ const Search = () => {
     const [videos, setVideos] = useState<Video[]>([]);
     const [channels, setChannels] = useState<Channel[]>([]);
     const [activeType, setActiveType] = useState<String>("");
-    const [searchValue, setSearchValue] = useState<string>(new URLSearchParams(window.location.search).get("q") || "");
+    const searchValue = new URLSearchParams(window.location.search).get("q") || "";
 
     useEffect(() => {
         const getVideosAsync = async () => {

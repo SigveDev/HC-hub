@@ -7,7 +7,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { Channel } from "@/assets/types";
 import { Loader2 } from 'lucide-react';
 
-const EditChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const EditChannel = ({ channel }: any) => {
     const [username, setUsername] = useState<string>("");
     const [prevFile, setPrevFile] = useState<ImageData>();
     const [file, setFile] = useState<File>();
@@ -23,12 +23,17 @@ const EditChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
             if (currentChannel) {
                 const pfpData: ImageData = await getPFP(currentChannel.pfp) as ImageData;
                 setPrevFile(pfpData);
-                setSrc(pfpData);
             }
         };
 
         fetchChannel();
     }, [channel]);
+
+    useEffect(() => {
+        if (prevFile) {
+            setSrc(prevFile.toString());
+        }
+    }, [prevFile]);
 
     const handlePFP = (file: File) => {
         setFile(file);
@@ -44,13 +49,23 @@ const EditChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
         if (username.length < 64 && username.length > 4) {
             if (file) {
                 setLoader(true);
-                const pfp = await updatePFP(channel.$id, channel.pfp, file);
-                const updatedChannel: Channel = await updateChannel(channel.$id, username, pfp.$id) as Channel;
-                if (updatedChannel.$id) {
-                    window.location.href = "/channel/" + updatedChannel.$id;
+                if (file !== undefined) {
+                    const pfp: any = await updatePFP(channel.$id, channel.pfp, file) as any;
+                    const updatedChannel: Channel = await updateChannel(channel.$id, username, pfp.$id) as Channel;
+                    if (updatedChannel.$id) {
+                        window.location.href = "/channel/" + updatedChannel.$id;
+                    } else {
+                        setLoader(false);
+                        setError("Error creating channel");
+                    }
                 } else {
-                    setLoader(false);
-                    setError("Error creating channel");
+                    const updatedChannel: Channel = await updateChannel(channel.$id, username, channel.pfp) as Channel;
+                    if (updatedChannel.$id) {
+                        window.location.href = "/channel/" + updatedChannel.$id;
+                    } else {
+                        setLoader(false);
+                        setError("Error creating channel");
+                    }
                 }
             } else {
                 setError("Please upload a profile picture");

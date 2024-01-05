@@ -9,12 +9,12 @@ import { Video, VideoRequest } from "@/assets/types";
 
 const Home = () => {
     const [videos, setVideos] = useState<Video[]>();
-    const [activeCat, setActiveCat] = useState<string>(new URLSearchParams(window.location.search).get("cat")?.toString() || "");
+    const activeCat = new URLSearchParams(window.location.search).get("cat")?.toString() || "";
     const lodingAmount = [1, 2, 3, 4, 5, 6];
 
     useEffect(() => {
         const getVideosAsync = async () => {
-            const videos = await getVideosByCategory(activeCat);
+            const videos: VideoRequest = await getVideosByCategory(activeCat) as VideoRequest;
             const videoRequest = videos as VideoRequest;
             setVideos(videoRequest.documents);
         };

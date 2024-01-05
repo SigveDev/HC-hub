@@ -4,7 +4,7 @@ import { Channel } from "@/assets/types";
 import { getChannel } from "@/lib/Appwrite";
 import { useEffect, useState } from "react";
 
-const Subscribed = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const Subscribed = ({ subscribedTo }: any) => {
     const [channels, setChannels] = useState<Channel[]>([]);
     const lodingAmount = [1, 2, 3];
 
@@ -13,7 +13,7 @@ const Subscribed = ({ user, subscribedTo, likedTo, log, channel }: any) => {
             if (subscribedTo) {
                 const updatedChannels: Channel[] = [];
                 for (const channel of subscribedTo[0].Channels) {
-                    const localChannel: Channel = await getChannel(channel.$id);
+                    const localChannel: Channel = await getChannel(channel.$id) as Channel;
                     updatedChannels.push(localChannel);
                 }
                 setChannels(updatedChannels);

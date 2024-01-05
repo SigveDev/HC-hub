@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 
 import { useTheme } from '@/components/theme-provider';
 
-const SideMenu = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const SideMenu = ({ subscribedTo, channel }: any) => {
     const { theme } = useTheme();
     const [page, setPage] = useState<string>();
     const [minimizeMenu, setMinimizeMenu] = useState<boolean>(false);
@@ -65,9 +65,9 @@ const SideMenu = ({ user, subscribedTo, likedTo, log, channel }: any) => {
                     {subscribedTo && subscribedTo[0].Channels.map((channel: any, index: number) => {
                         if (index > 5) return;
                         const channelLink = page + "/" + channel.$id;
-                        const localImage = getPFP(channel.pfp);
+                        const localImage: ImageData = getPFP(channel.pfp) as ImageData;
                         return (
-                            <a href={"/channel/" + channel.$id} className={`flex flex-row items-center justify-start h-10 gap-2 p-2 md:rounded-full lg:rounded-lg ${minimizeMenu ? "lg:w-fit" : "lg:w-full"} ${page === channelLink && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"} md:w-fit md:bg-transparent`} key={index}>{localImage && <img src={localImage} className='h-full rounded-full aspect-square' />}<span className={`w-full h-full break-all ${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>{channel.username}</span></a>
+                            <a href={"/channel/" + channel.$id} className={`flex flex-row items-center justify-start h-10 gap-2 p-2 md:rounded-full lg:rounded-lg ${minimizeMenu ? "lg:w-fit" : "lg:w-full"} ${page === channelLink && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"} md:w-fit md:bg-transparent`} key={index}>{localImage && <img src={localImage.toString()} className='h-full rounded-full aspect-square' />}<span className={`w-full h-full break-all ${minimizeMenu ? "lg:hidden" : "lg:block"} md:hidden sm:hidden`}>{channel.username}</span></a>
                         );
                     })}
                 </div>
@@ -96,9 +96,9 @@ const SideMenu = ({ user, subscribedTo, likedTo, log, channel }: any) => {
                             {subscribedTo && subscribedTo[0].Channels.map((channel: any, index: number) => {
                                 if (index > 5) return;
                                 const channelLink = page + "/" + channel.$id;
-                                const localImage = getPFP(channel.pfp);
+                                const localImage: ImageData = getPFP(channel.pfp) as ImageData;
                                 return (
-                                    <a href={"/channel/" + channel.$id} className={`flex flex-row items-center justify-start h-10 gap-2 p-2 rounded-lg w-full ${page === channelLink && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"}`} key={index}>{localImage && <img src={localImage} className='h-full rounded-full aspect-square' />}<span className={`w-full h-full break-all lg:block`}>{channel.username}</span></a>
+                                    <a href={"/channel/" + channel.$id} className={`flex flex-row items-center justify-start h-10 gap-2 p-2 rounded-lg w-full ${page === channelLink && (theme === "dark" ? "bg-slate-800" : "bg-slate-200")} ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-200"}`} key={index}>{localImage && <img src={localImage.toString()} className='h-full rounded-full aspect-square' />}<span className={`w-full h-full break-all lg:block`}>{channel.username}</span></a>
                                 );
                             })}
                         </div>

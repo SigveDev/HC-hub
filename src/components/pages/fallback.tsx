@@ -61,7 +61,7 @@ const Fallback = () => {
                 Cookies.set('token', res.data.jwt, { expires: 7 });
             
                 const login = loginHCUser(res.data.account.email, res.data.account.$id) as Promise<any>;
-                login.then((res: any) => {
+                login.then(() => {
                     setProgress(100);
                     setTimeout(() => {
                         window.location.href = '/';
@@ -71,7 +71,7 @@ const Fallback = () => {
                     const create = createHCUser(res.data.account.$id, res.data.account.email, res.data.account.name) as Promise<any>;
                         create.then((res: any) => {
                             const login = loginHCUser(res.data.account.email, res.data.account.$id) as Promise<any>;
-                            login.then((res: any) => {
+                            login.then(() => {
                                 setProgress(100);
                                 setTimeout(() => {
                                     window.location.href = '/';

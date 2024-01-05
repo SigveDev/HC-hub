@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import VideoView2 from "../video-view2";
 import { Video } from "@/assets/types";
 
-const History = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const History = ({ log }: any) => {
     const lodingAmount = [1, 2, 3];
 
     return (

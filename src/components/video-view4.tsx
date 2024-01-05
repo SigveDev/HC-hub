@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getImage } from '@/lib/Appwrite';
-import { Video, Channel } from '@/assets/types';
+import { Video } from '@/assets/types';
 
 const VideoView4 = (vid: Video) => {
-    const [owner, setOwner] = useState<Channel>(vid.Channel);
+    const owner = vid.Channel;
     const localImage = getImage(vid.image);
 
     return (

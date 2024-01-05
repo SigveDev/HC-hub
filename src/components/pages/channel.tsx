@@ -6,7 +6,7 @@ import VideoView4 from "../video-view4";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
-const ChannelView = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const ChannelView = ({ user, subscribedTo }: any) => {
     const [myChannel, setMyChannel] = useState<boolean>(false);
     const [thisChannel, setThisChannel] = useState<Channel>();
     const [pfp, setPfp] = useState<ImageData>();
@@ -58,7 +58,7 @@ const ChannelView = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     const subscribe = async () => {
         if (thisChannel && user) {
             setIsSubscribed(true);
-            const res = await subscribeToChannel(user.account.$id, thisChannel.$id);
+            await subscribeToChannel(user.account.$id, thisChannel.$id);
 
             const url = window.location.href.split('/');
             const id = url[url.length - 1];
@@ -77,7 +77,7 @@ const ChannelView = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     const unSubscribe = async () => {
         if (thisChannel && user) {
             setIsSubscribed(false);
-            const res = await unsubscribeFromChannel(user.account.$id, thisChannel.$id);
+            await unsubscribeFromChannel(user.account.$id, thisChannel.$id);
 
             const url = window.location.href.split('/');
             const id = url[url.length - 1];
@@ -97,7 +97,7 @@ const ChannelView = ({ user, subscribedTo, likedTo, log, channel }: any) => {
         <>
             <div className="flex flex-row w-2/3 mt-12 mb-12 h-fit">
                 <div className="flex flex-row p-0 h-fit w-fit aspect-square">
-                    {(thisChannel && pfp) ? <img src={pfp} className="w-24 rounded-full aspect-square" /> : <Skeleton className="w-24 rounded-full aspect-square" />}
+                    {(thisChannel && pfp) ? <img src={pfp.toString()} className="w-24 rounded-full aspect-square" /> : <Skeleton className="w-24 rounded-full aspect-square" />}
                 </div>
                 <div className="flex flex-col w-full h-full gap-2 pl-4">
                     {thisChannel ? <h1 className="text-2xl font-bold">{thisChannel && thisChannel.username}</h1> : <Skeleton className="w-2/3 h-10 rounded-lg" />}

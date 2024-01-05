@@ -9,11 +9,10 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
-import Header from '@/components/header';
 import VideoPlayer from '../video-player';
 import VideoView3 from '../video-view3';
 
-const Watch = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const Watch = ({ user, subscribedTo, likedTo }: any) => {
     const { theme } = useTheme();
     const [videoData, setVideoData] = useState<Video>();
     const [video, setVideo] = useState<any>();
@@ -140,7 +139,7 @@ const Watch = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     const subscribe = async () => {
         if (thisChannel && user) {
             setIsSubscribed(true);
-            const res = await subscribeToChannel(user.account.$id, thisChannel.$id);
+            await subscribeToChannel(user.account.$id, thisChannel.$id);
 
             const id = new URLSearchParams(window.location.search).get("v");
 
@@ -159,7 +158,7 @@ const Watch = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     const unSubscribe = async () => {
         if (thisChannel && user) {
             setIsSubscribed(false);
-            const res = await unsubscribeFromChannel(user.account.$id, thisChannel.$id);
+            await unsubscribeFromChannel(user.account.$id, thisChannel.$id);
 
             const id = new URLSearchParams(window.location.search).get("v");
 
@@ -178,7 +177,7 @@ const Watch = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     const like = async () => {
         if (videoData && user) {
             setIsLiked(true);
-            const res = await likeVideo(user.account.$id, videoData.$id);
+            await likeVideo(user.account.$id, videoData.$id);
 
             const id = new URLSearchParams(window.location.search).get("v");
 
@@ -197,7 +196,7 @@ const Watch = ({ user, subscribedTo, likedTo, log, channel }: any) => {
     const unLike = async () => {
         if (videoData && user) {
             setIsLiked(false);
-            const res = await unlikeVideo(user.account.$id, videoData.$id);
+            await unlikeVideo(user.account.$id, videoData.$id);
 
             const id = new URLSearchParams(window.location.search).get("v");
 
@@ -226,7 +225,9 @@ const Watch = ({ user, subscribedTo, likedTo, log, channel }: any) => {
                         addToLog(user?.account.$id, videoData.$id);
                     }
                 } else {
-                    clearInterval(viewInterval);
+                    if (viewInterval) {
+                        clearInterval(viewInterval);
+                    }
                 }
             }, 5000);
         }

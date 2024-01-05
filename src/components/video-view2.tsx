@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { badgeVariants } from "@/components/ui/badge"
-import { getImage, getChannel, getPFP } from '@/lib/Appwrite';
-import { Video, Channel } from '@/assets/types';
+import { getImage, getPFP } from '@/lib/Appwrite';
+import { Video } from '@/assets/types';
 
 const VideoView2 = (vid: Video) => {
-    const [owner, setOwner] = useState<Channel>(vid.Channel);
+    const owner = vid.Channel;
     const [channelPfp, setChannelPfp] = useState<ImageData>();
     const [category, setCategory] = useState<string>("");
     const localImage = getImage(vid.image);

@@ -1,4 +1,4 @@
-import { Channel, ChannelRequest, LikedToRequest, LogRequest, SubscribedToRequest, Video, VideoRequest } from '@/assets/types';
+import { Channel, LikedToRequest, LogRequest, SubscribedToRequest, Video } from '@/assets/types';
 import { Client, Account, Databases, Storage, Query, ID } from 'appwrite';
 
 const client = new Client();
@@ -180,10 +180,10 @@ export const uploadPFP = async (file: File) => {
 
 export const updatePFP = async (channelId: string, prevId: string, file: File) => {
     try {
-        const prevPfp = await storage.deleteFile(import.meta.env.VITE_PFP_BUCKET_ID || '', prevId);
+        await storage.deleteFile(import.meta.env.VITE_PFP_BUCKET_ID || '', prevId);
         const pfp = await storage.createFile(import.meta.env.VITE_PFP_BUCKET_ID || '', ID.unique(), file);
 
-        const channel = await databases.updateDocument(
+        await databases.updateDocument(
             import.meta.env.VITE_HC_HUB_DB_ID || '',
             import.meta.env.VITE_CHANNELS_TABLE_ID || '',
             channelId,

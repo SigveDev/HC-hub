@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createChannel, uploadPFP } from "@/lib/Appwrite";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,9 +7,8 @@ import { FileUploader } from "react-drag-drop-files";
 import { Channel } from "@/assets/types";
 import { Loader2 } from 'lucide-react';
 
-const CreateChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
+const CreateChannel = ({ user }: any) => {
     const [username, setUsername] = useState<string>("");
-    const [pfp, setPfp] = useState<string>("");
     const [file, setFile] = useState<File>();
     const [loader, setLoader] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
@@ -26,8 +25,7 @@ const CreateChannel = ({ user, subscribedTo, likedTo, log, channel }: any) => {
         if (username.length < 64 && username.length > 4) {
             if (file) {
                 setLoader(true);
-                const pfp = await uploadPFP(file);
-                console.log(pfp);
+                const pfp: any = await uploadPFP(file) as any;
                 const channel: Channel = await createChannel(user.account.$id, username, pfp.$id) as Channel;
                 if (channel.$id) {
                     window.location.href = "/channel/" + channel.$id;

@@ -141,16 +141,16 @@ function App() {
           {user && subscribedTo && likedTo && log && <DefaultLayout user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel}>
             <Routes>
               <Route path="/" element={user && (user === "error" ? <Navigate to="/login" /> : <Home />)} />
-              <Route path="/subscribed" element={user && (user === "error" ? <Navigate to="/login" /> : <Subscribed user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
-              <Route path="/liked" element={user && (user === "error" ? <Navigate to="/login" /> : <Liked user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
-              <Route path="/history" element={user && (user === "error" ? <Navigate to="/login" /> : <History user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
+              <Route path="/subscribed" element={user && (user === "error" ? <Navigate to="/login" /> : <Subscribed subscribedTo={subscribedTo} />)} />
+              <Route path="/liked" element={user && (user === "error" ? <Navigate to="/login" /> : <Liked likedTo={likedTo} />)} />
+              <Route path="/history" element={user && (user === "error" ? <Navigate to="/login" /> : <History log={log} />)} />
 
-              <Route path="/channel/:channelId" element={user && (user === "error" ? <Navigate to="/login" /> : <ChannelView user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
-              <Route path="/channel/create" element={user && (user === "error" ? <Navigate to="/login" /> : <CreateChannel user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
-              <Route path="/channel/edit" element={user && (user === "error" ? <Navigate to="/login" /> : <EditChannel user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
+              <Route path="/channel/:channelId" element={user && (user === "error" ? <Navigate to="/login" /> : <ChannelView user={user} subscribedTo={subscribedTo} />)} />
+              <Route path="/channel/create" element={user && (user === "error" ? <Navigate to="/login" /> : <CreateChannel user={user} />)} />
+              <Route path="/channel/edit" element={user && (user === "error" ? <Navigate to="/login" /> : <EditChannel channel={channel} />)} />
               
               <Route path="/search?" element={user && (user === "error" ? <Navigate to="/login" /> : <Search />)} />
-              <Route path="/watch?" element={user && (user === "error" ? <Navigate to="/login" /> : <Watch user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel} />)} />
+              <Route path="/watch?" element={user && (user === "error" ? <Navigate to="/login" /> : <Watch user={user} subscribedTo={subscribedTo} likedTo={likedTo} />)} />
             </Routes>
           </DefaultLayout>}
           <Routes>
