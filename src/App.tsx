@@ -138,7 +138,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
         <ScrollArea className="w-full h-full pl-4 pr-4">
-          {user && subscribedTo && likedTo && log && <DefaultLayout user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel}>
+          {(user && subscribedTo && likedTo && log) ? <DefaultLayout user={user} subscribedTo={subscribedTo} likedTo={likedTo} log={log} channel={channel}>
             <Routes>
               <Route path="/" element={user && (user === "error" ? <Navigate to="/login" /> : <Home />)} />
               <Route path="/subscribed" element={user && (user === "error" ? <Navigate to="/login" /> : <Subscribed subscribedTo={subscribedTo} />)} />
@@ -152,12 +152,13 @@ function App() {
               <Route path="/search?" element={user && (user === "error" ? <Navigate to="/login" /> : <Search />)} />
               <Route path="/watch?" element={user && (user === "error" ? <Navigate to="/login" /> : <Watch user={user} subscribedTo={subscribedTo} likedTo={likedTo} />)} />
             </Routes>
-          </DefaultLayout>}
+          </DefaultLayout>
+          :
           <Routes>
             <Route path="/" element={user && (user === "error" && <Navigate to="/login" />)} />
             <Route path="/login" element={user && (user !== "error" ? <Navigate to="/" /> : <Login />)} />
             <Route path="/fallback/:jwt" element={<Fallback />} />
-          </Routes>
+          </Routes>}
           <Toaster />
         </ScrollArea>
       </ThemeProvider>
