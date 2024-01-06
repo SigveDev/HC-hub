@@ -31,7 +31,7 @@ const Home = () => {
                 <a href="?cat=game" className={activeCat === "game" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>Games</a>
                 <a href="?cat=music" className={activeCat === "music" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>Music</a>
             </div>
-            <div className="grid gap-4 mt-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
+            <div className="grid w-full gap-4 mt-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 h-fit">
                 {videos != undefined ? videos.map((video, index) => {
                     return (
                         <VideoView {...video} key={index} />
