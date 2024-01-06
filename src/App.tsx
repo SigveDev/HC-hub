@@ -134,8 +134,6 @@ function App() {
     }
   }, [user]);
 
-  console.log(user, subscribedTo, likedTo, log, channel);
-
   return (
     <BrowserRouter>
       <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
