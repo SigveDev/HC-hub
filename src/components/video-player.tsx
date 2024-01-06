@@ -274,12 +274,14 @@ const VideoPlayer = ({ video }: any) => {
     }
 
     const skip = (amount: number) => {
+        if (loading) return;
         if (videoElement) {
             videoElement.currentTime += amount;
         }
     };
 
     const togglePlay = () => {
+        if (loading) return;
         if (videoElement && videoElement.paused) {
             videoElement.play();
         } else if (videoElement && !videoElement.paused) {
@@ -288,6 +290,7 @@ const VideoPlayer = ({ video }: any) => {
     };
 
     const toggleFullscreen = () => {
+        if (loading) return;
         if (document.fullscreenElement == null) {
             if (videoContainer) {
                 videoContainer.requestFullscreen();
@@ -298,6 +301,7 @@ const VideoPlayer = ({ video }: any) => {
     };
 
     const togglePIP = () => {
+        if (loading) return;
         if (document.pictureInPictureElement) {
             document.exitPictureInPicture();
         } else if (videoElement) {
@@ -306,6 +310,7 @@ const VideoPlayer = ({ video }: any) => {
     };
 
     const toggleVolume = () => {
+        if (loading) return;
         if (videoElement) {
             if (videoElement.volume === 0) {
                 videoElement.volume = volume / 100;
@@ -318,7 +323,7 @@ const VideoPlayer = ({ video }: any) => {
     return (
         <div id="videoContainer" className="relative w-full h-full bg-black rounded-xl group/video aspect-video">
             <video id="video" className={`absolute bottom-0 left-0 right-0 w-full h-full rounded-xl ${!mouseMoving && "cursor-none"}`} src={video} onClick={togglePlay} />
-            {!loading ? <div id="uiContainer" className={`absolute bottom-0 z-50 w-full transition-opacity ease-in-out ${playing ? 'opacity-0' : 'opacity-100'} h-fit group-hover/video:duration-150 ${mouseMoving && "group-hover/video:opacity-100"} before:bg-gradient-to-t before:from-black before:to-transparent before:w-full before:bottom-0 before:aspect-[6/1] before:z-[-1] before:absolute before:pointer-events-none before:rounded-b-xl`}>
+            <div id="uiContainer" className={`absolute bottom-0 z-50 w-full transition-opacity ease-in-out ${playing ? 'opacity-0' : 'opacity-100'} h-fit group-hover/video:duration-150 ${mouseMoving && "group-hover/video:opacity-100"} before:bg-gradient-to-t before:from-black before:to-transparent before:w-full before:bottom-0 before:aspect-[6/1] before:z-[-1] before:absolute before:pointer-events-none before:rounded-b-xl`}>
                 <div id="timeline-container" className="h-[7px] ms-2 me-2 cursor-pointer flex items-center group/timeline">
                     <div id="timeline" className="bg-slate-800 h-[3px] w-full relative group-hover/timeline:h-full">
                         <div id="preview" className="absolute top-0 bottom-0 left-0 hidden bg-slate-500 group-hover/timeline:block"></div>
@@ -348,8 +353,7 @@ const VideoPlayer = ({ video }: any) => {
                     {fullscreen ? <button onClick={toggleFullscreen} className="p-0 m-0 bg-transparent border-none" title="exit fullscreen (f)"><Minimize size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" /></button> : <button onClick={toggleFullscreen} className="p-0 m-0 bg-transparent border-none" title="fullscreen (f)"><Maximize size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer"  /></button>}
                 </div>
             </div>
-            :
-            <div className="flex items-center justify-center w-full h-full">
+            {loading && <div className="flex items-center justify-center w-full h-full">
                 <Loader2 size={64} className="animate-spin" />
             </div>}
         </div>
