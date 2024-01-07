@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 const Login = () => {
     return (
         <div className="flex flex-col items-center justify-center w-full h-dvh">
-            <div className="grid justify-center w-1/3 grid-cols-1 grid-rows-1 h-1/2 grid-gap-2">
+            <div className="grid justify-center grid-cols-1 grid-rows-1 lg:w-1/3 md:w-2/4 sm:w-4/5 h-1/2 grid-gap-2">
                 <Tabs defaultValue="login" className="w-full">
                     <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger value="login">Login</TabsTrigger>

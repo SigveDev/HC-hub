@@ -92,7 +92,7 @@ const Header = ({ user, channel }: any) => {
     return (
         <div className="flex flex-row items-center justify-between w-full h-12 mt-4">
             <div className="flex flex-row items-center justify-center gap-2 h-fit w-fit">
-                {minimizeMenu && <button onClick={handleToggleMenu}><Menu /></button>}
+                <button onClick={handleToggleMenu} className={minimizeMenu ? "block" : "lg:hidden md:hidden sm:block xs:block"}><Menu /></button>
                 <a href="/"><h1 className="flex items-center justify-center h-full text-xl font-semibold w-fit">HC Hub</h1></a>
             </div>
             <form className="flex flex-row items-center justify-center w-1/3 h-full" onSubmit={(e) => handleSearch(e)}>

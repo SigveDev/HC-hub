@@ -8,6 +8,7 @@ import { ThumbsUp, Forward } from 'lucide-react';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { Separator } from "@/components/ui/separator";
 
 import VideoPlayer from '../video-player';
 import VideoView3 from '../video-view3';
@@ -242,8 +243,8 @@ const Watch = ({ user, subscribedTo, likedTo }: any) => {
     return (
         <>
             <div className="flex flex-col items-center justify-center w-full mb-4 h-fit">
-                <div className="grid w-full grid-cols-3 h-fit max-w-[1500px] mt-6 gap-4">
-                    <div className="w-full col-span-2 h-fit">
+                <div className={`grid w-full lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 h-fit max-w-[1500px] mt-6 gap-4`}>
+                    <div className="w-full lg:col-span-2 md:col-span-1 sm:col-span-1 xs:col-span-1 h-fit">
                         <div className="w-full aspect-video">
                             {!video ? <Skeleton className="w-full h-full rounded-xl" /> : <VideoPlayer video={video} />}
                         </div>
@@ -276,6 +277,7 @@ const Watch = ({ user, subscribedTo, likedTo }: any) => {
                         <Skeleton className='flex w-full h-32 mt-4 rounded-xl' />
                         }
                     </div>
+                    <Separator className='mt-2 mb-6 lg:hidden md:block sm:block xs:block' />
                     <div className='flex flex-col w-full col-span-1 h-fit'>
                         <ScrollArea className="flex flex-row w-full h-fit">
                             <Badge variant="default">Related Videos</Badge>
