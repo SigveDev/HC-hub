@@ -33,7 +33,7 @@ const VideoPlayer = ({ video }: any) => {
     }
 
     useEffect(() => {
-        if (duration !== "0:00") {
+        if (duration != "0:00") {
             setLoading(false);
         }
     }, [duration]);
@@ -274,14 +274,12 @@ const VideoPlayer = ({ video }: any) => {
     }
 
     const skip = (amount: number) => {
-        if (loading) return;
         if (videoElement) {
             videoElement.currentTime += amount;
         }
     };
 
     const togglePlay = () => {
-        if (loading) return;
         if (videoElement && videoElement.paused) {
             videoElement.play();
         } else if (videoElement && !videoElement.paused) {
@@ -290,7 +288,6 @@ const VideoPlayer = ({ video }: any) => {
     };
 
     const toggleFullscreen = () => {
-        if (loading) return;
         if (document.fullscreenElement == null) {
             if (videoContainer) {
                 videoContainer.requestFullscreen();
@@ -301,7 +298,6 @@ const VideoPlayer = ({ video }: any) => {
     };
 
     const togglePIP = () => {
-        if (loading) return;
         if (document.pictureInPictureElement) {
             document.exitPictureInPicture();
         } else if (videoElement) {
@@ -310,7 +306,6 @@ const VideoPlayer = ({ video }: any) => {
     };
 
     const toggleVolume = () => {
-        if (loading) return;
         if (videoElement) {
             if (videoElement.volume === 0) {
                 videoElement.volume = volume / 100;
