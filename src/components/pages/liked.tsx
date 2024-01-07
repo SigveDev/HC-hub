@@ -7,7 +7,7 @@ const Liked = ({ likedTo }: any) => {
 
     return (
         <>
-            <div className="grid w-4/5 gap-2 mt-4">
+            <div className="grid max-w-[1000px] gap-2 mt-4">
                 {likedTo ? likedTo[0].Videos.map((video: Video, index: number) => (
                     <VideoView2 {...video} key={index} />
                 ))

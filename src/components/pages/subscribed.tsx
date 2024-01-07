@@ -25,7 +25,7 @@ const Subscribed = ({ subscribedTo }: any) => {
 
     return (
         <>
-            <div className="grid w-4/5 gap-2 mt-4">
+            <div className="grid max-w-[1000px] gap-2 mt-4">
                 {(channels.length > 0 && channels[0].$id != "") ? channels.map((channel: Channel, index: number) => (
                     <ChannelView2 {...channel} key={index} />
                 ))
