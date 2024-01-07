@@ -105,7 +105,7 @@ const ChannelView = ({ user, subscribedTo }: any) => {
                 </div>
                 {thisChannel ? myChannel ? <Button className="h-10 pl-4 pr-4 mt-auto mb-auto text-sm rounded-full w-fit" variant="default" asChild><a href="/channel/edit">Edit</a></Button> : isSubscribed ? <Button className="h-10 pl-4 pr-4 mt-auto mb-auto text-sm rounded-full w-fit" variant="secondary" onClick={unSubscribe}>Subscribed</Button> : <Button className="h-10 pl-4 pr-4 mt-auto mb-auto text-sm rounded-full w-fit" onClick={subscribe}>Subscribe</Button> : <Skeleton className="w-1/4 h-8 rounded-lg" />}
             </div>
-            <div className="grid max-w-[1000px] gap-2 mt-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid max-w-[1000px] gap-2 mt-4 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
                 {thisChannel ? thisChannel.Videos.map((video: any, index: number) => (
                     <VideoView4 {...video} key={index} />
                 ))
