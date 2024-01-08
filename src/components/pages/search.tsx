@@ -42,11 +42,11 @@ const Search = () => {
 
     return (
         <>
-            <div className="flex flex-row max-w-[1000px] gap-2 mt-4 mb-4">
-                <a href={"?q=" + searchValue} className={activeType === "" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>Videos</a>
-                <a href={"?q=" + searchValue + "&type=channel"} className={activeType === "channel" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>Channels</a>
-            </div>
             <div className="grid max-w-[1000px] gap-2">
+                <div className="flex flex-row w-full gap-2 mt-4 mb-4">
+                    <a href={"?q=" + searchValue} className={activeType === "" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>Videos</a>
+                    <a href={"?q=" + searchValue + "&type=channel"} className={activeType === "channel" ? badgeVariants({ variant: "default" }) : badgeVariants({ variant: "outline" })}>Channels</a>
+                </div>
                 {activeType === "" ? (videos && videos.map((video, index) => {
                     return (
                         <VideoView2 {...video} key={index} />

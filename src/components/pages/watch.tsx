@@ -283,7 +283,7 @@ const Watch = ({ user, subscribedTo, likedTo }: any) => {
                             <Badge variant="default">Related Videos</Badge>
                             <ScrollBar orientation="horizontal" />
                         </ScrollArea>
-                        <div className="flex flex-col w-full mt-2 h-fit">
+                        <div className="flex flex-col w-full gap-2 mt-2 h-fit">
                             {relatedVideos && relatedVideos.map((video, index) => {
                                 if (video.$id === videoData?.$id || index > 8) {
                                     return null;

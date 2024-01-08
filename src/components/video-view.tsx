@@ -20,7 +20,7 @@ const VideoView = (vid: Video) => {
 
     return (
         <a href={"/watch?v=" + vid.$id}>
-            <Card className="w-full aspect-[6/5] border-none">
+            <Card className="w-full border-none h-fit">
                 <CardContent className="flex flex-col w-full h-full p-0">
                     <div className='h-full aspect-video'>
                         {!localImage ? <Skeleton className="w-full rounded-lg aspect-video" /> : <img src={localImage?.toString() || ""} className="w-full rounded-lg aspect-video" />}
