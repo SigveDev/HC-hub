@@ -326,9 +326,9 @@ const VideoPlayer = ({ video }: any) => {
                         <div id="thumb" className="hidden left-0 absolute top-[-50%] bottom-0 h-[200%] translate-x-[-50%] bg-red-700 rounded-full aspect-square group-hover/timeline:flex"></div>
                     </div>
                 </div>
-                <div className="z-50 flex flex-row items-end w-full h-full gap-4 p-2">
+                <div className="z-50 flex flex-row items-end w-full h-[36px] gap-4 p-[8px]">
                     {playing ? <button onClick={togglePlay} className="p-0 m-0 bg-transparent border-none" title="pause (k)"><Pause size={20} color="#ffffff" strokeWidth={2} absoluteStrokeWidth className="cursor-pointer" /></button> : <button onClick={togglePlay} className="p-0 m-0 bg-transparent border-none" title="play (k)"><Play size={20} color="#ffffff" strokeWidth={2} absoluteStrokeWidth className="cursor-pointer" /></button>}
-                    <div className="flex items-center group/volume">
+                    <div className="flex items-center w-[20px] hover:w-fit group/volume">
                         <button onClick={toggleVolume} className="p-0 m-0 bg-transparent border-none" title={videoElement && (videoElement.volume === 0 ? "unmute (m)" : "mute (m)")}>
                             {videoElement && (videoElement.volume === 0 ? <VolumeX size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" /> : (videoElement.volume < 0.5 ? <Volume1 size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" /> : <Volume2 size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" />))}
                         </button>
