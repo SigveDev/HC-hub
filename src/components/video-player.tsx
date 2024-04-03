@@ -1,6 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { Play, Pause, Maximize, Minimize, PictureInPicture2, Volume1, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { Play, Pause, Maximize, Minimize, PictureInPicture2, Volume1, Volume2, VolumeX, Loader2, Cast, X } from "lucide-react";
 
+// Declare the chrome namespace to avoid TypeScript errors
+declare global {
+    interface Window {
+        chrome: any;
+    }
+}
+
+declare global {
+     interface Window {
+         __onGCastApiAvailable: (isAvailable: boolean) => void;
+     }
+}
 const VideoPlayer = ({ video }: any) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [playing, setPlaying] = useState<boolean>(false);
@@ -315,6 +327,81 @@ const VideoPlayer = ({ video }: any) => {
         }
     };
 
+    // Chromecast
+
+    const [casting, setCasting] = useState(false);
+    const [castSession, setCastSession] = useState<any>(null);
+
+    useEffect(() => {
+        // Load Cast SDK script
+        const script = document.createElement('script');
+        script.src = 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js';
+        script.async = true;
+        document.body.appendChild(script);
+
+        // Initialize the Cast SDK
+        window['__onGCastApiAvailable'] = (isAvailable: boolean) => {
+            if (isAvailable) {
+                const sessionRequest = new window.chrome.cast.SessionRequest(window.chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+                const apiConfig = new window.chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
+                window.chrome.cast.initialize(apiConfig, () => console.log('Cast SDK initialized'), onError);
+            }
+        };
+
+        // Session listener
+        const sessionListener = (session: any) => {
+            setCastSession(session);
+            if (session.media.length !== 0) {
+                console.log('Found existing session');
+            }
+        };
+
+        // Receiver listener
+        const receiverListener = (e: any) => {
+            if (e === window.chrome.cast.ReceiverAvailability.AVAILABLE) {
+                console.log('Chromecast is available');
+            } else {
+                console.log('Chromecast is not available');
+            }
+        };
+
+        // Error handler
+        const onError = (error: any) => {
+            console.error('Error initializing Cast SDK:', error);
+        };
+
+        // Cleanup
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    const startCasting = () => {
+        if (!casting) {
+            window.chrome.cast.requestSession(
+                (session: any) => {
+                    setCastSession(session);
+                    const mediaInfo = new window.chrome.cast.media.MediaInfo(video, 'video/mp4');
+                    const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
+                    session.loadMedia(request);
+                    setCasting(true);
+                },
+                (error: any) => {
+                    console.error('Error starting Cast session:', error);
+                }
+            );
+        } else {
+            if (castSession) {
+                castSession.stop(() => {
+                    setCastSession(null);
+                    setCasting(false);
+                }, (error: any) => {
+                    console.error('Error stopping Cast session:', error);
+                });
+            }
+        }
+    };
+
     return (
         <div id="videoContainer" className="relative w-full h-full bg-black rounded-xl group/video aspect-video">
             <video id="video" className={`absolute bottom-0 left-0 right-0 w-full h-full rounded-xl ${!mouseMoving && "cursor-none"}`} src={video} onClick={togglePlay} />
@@ -344,6 +431,7 @@ const VideoPlayer = ({ video }: any) => {
                         <div className="text-white">/</div> 
                         <div className="text-white">{duration}</div>
                     </div>
+                    <button onClick={startCasting} className="p-0 m-0 bg-transparent border-none" title="cast">{casting ? <X size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" /> : <Cast size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" />}</button>
                     <button onClick={togglePIP} className="p-0 m-0 bg-transparent border-none" title="miniplayer (i)"><PictureInPicture2 size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" /></button>
                     {fullscreen ? <button onClick={toggleFullscreen} className="p-0 m-0 bg-transparent border-none" title="exit fullscreen (f)"><Minimize size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer" /></button> : <button onClick={toggleFullscreen} className="p-0 m-0 bg-transparent border-none" title="fullscreen (f)"><Maximize size={20} color="#ffffff" strokeWidth={2} className="cursor-pointer"  /></button>}
                 </div>
