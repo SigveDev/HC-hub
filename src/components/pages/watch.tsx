@@ -214,30 +214,13 @@ const Watch = ({ user, subscribedTo, likedTo }: any) => {
     }
 
     useEffect(() => {
-        const video = document.getElementById('video') as HTMLVideoElement;
-        let viewInterval: NodeJS.Timeout | null = null;
-
         if (videoData && video) {
-            viewInterval = setInterval(() => {
-                if (!viewGiven) {
-                    if (video.currentTime > (video.duration * 0.6)) {
-                        setViewGiven(true);
-                        giveVideoView(videoData.$id);
-                        addToLog(user?.account.$id, videoData.$id);
-                    }
-                } else {
-                    if (viewInterval) {
-                        clearInterval(viewInterval);
-                    }
-                }
-            }, 5000);
-        }
-
-        return () => {
-            if (viewInterval) {
-                clearInterval(viewInterval);
+            if (!viewGiven) {
+                setViewGiven(true);
+                giveVideoView(videoData.$id);
+                addToLog(user?.account.$id, videoData.$id);
             }
-        };
+        }
     }, [videoData, viewGiven]);
 
     return (
