@@ -68,7 +68,7 @@ const Watch = ({ user, subscribedTo, likedTo }: any) => {
       }
     };
     getVideoDownloadLink();
-  }, []);
+  }, [videoData]);
 
   useEffect(() => {
     const checkMyChannel = () => {
@@ -354,14 +354,16 @@ const Watch = ({ user, subscribedTo, likedTo }: any) => {
                     <Forward size={20} strokeWidth={2} />
                     share
                   </Button>
-                  <Button
-                    className="h-10 gap-2 pl-4 pr-4 text-sm rounded-full w-fit"
-                    variant="secondary"
-                    onClick={() => window.open(downloadLink, "_blank")}
-                  >
-                    <Download size={20} strokeWidth={2} />
-                    Download
-                  </Button>
+                  {downloadLink !== "" && (
+                    <Button
+                      className="h-10 gap-2 pl-4 pr-4 text-sm rounded-full w-fit"
+                      variant="secondary"
+                      onClick={() => window.open(downloadLink, "_blank")}
+                    >
+                      <Download size={20} strokeWidth={2} />
+                      Download
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
