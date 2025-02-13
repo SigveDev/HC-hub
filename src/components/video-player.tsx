@@ -464,6 +464,7 @@ const VideoPlayer = ({ video }: any) => {
         }`}
         src={video}
         onClick={togglePlay}
+        playsInline
       />
       <div
         id="uiContainer"
